@@ -1,0 +1,9 @@
+{
+  "test": {
+    "log-base": "/dev/null",
+    "event-handlers": ["console_direct+"]
+  },
+  "cmake-args": [
+    "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+  ],
+}

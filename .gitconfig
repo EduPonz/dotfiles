@@ -1,0 +1,12 @@
+[user]
+    email = eduardoponz@eprosima.com
+    name = Eduardo Ponz
+[core]
+    editor = vim
+[alias]
+    lg = log --color --pretty=format:'%Cred%h %Cgreen(%cr) %C(bold blue)%an %Creset - %s %C(yellow)%d %Creset' --abbrev-commit
+[credential]
+    helper = "store"
+[http "https://gitlab.intranet.eprosima.com"]
+    sslVerify = false
+
