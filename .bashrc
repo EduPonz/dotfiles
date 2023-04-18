@@ -123,21 +123,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-update_git_config ()
-{
-    echo "[user]" > ~/.gitconfig;
-    echo "    email = eduardoponz@eprosima.com" >> ~/.gitconfig;
-    echo "    name = Eduardo Ponz" >> ~/.gitconfig;
-    echo "[core]" >> ~/.gitconfig;
-    echo "    editor = vim" >> ~/.gitconfig;
-    echo "[alias]" >> ~/.gitconfig;
-    echo "    lg = log --color --pretty=format:'%Cred%h %Cgreen(%cr) %C(bold blue)%an %Creset - %s %C(yellow)%d %Creset' --abbrev-commit" >> ~/.gitconfig;
-    echo "[credential]" >> ~/.gitconfig;
-    echo "    helper = \"store\"" >> ~/.gitconfig
-}
-
-update_git_config
-
 eprosima_docs ()
 {
     (
