@@ -226,39 +226,85 @@ eprosima_docs ()
 
 eprosima_uncrustify ()
 {
-    for file in "$@";
-    do
-        echo "manual uncrustify ${file}";
-        uncrustify -c ~/dev/cpp-style/uncrustify.cfg -f "${file}" -o "${file}" --no-backup > /dev/null;
-    done
-}
+    (
+        function print_usage ()
+        {
+            echo "------------------------------------------------------------------------";
+            echo "Uncrustify C++ projects using eProsima style";
+            echo "------------------------------------------------------------------------";
+            echo "";
+            echo "This tool uses git to scan for C++ files and runs uncrustify on them.";
+            echo "";
+            echo "OPTIONAL FLAGS:";
+            echo "   -h | --help                    Print help";
+            echo "   -m | --modified                Uncrustify modified files";
+            echo "   -n | --new                     Uncrustify new files";
+            echo ""
+            echo "OPTIONAL ARGUMENTS:";
+            echo "   -f | --file [FILE]             File to uncrustify";
+            echo "";
+            exit ${1}
+        };
 
-eprosima_uncrustify_all ()
-{
-    local FILES=$(find -regex '.*/.*\.\(c\|cpp\|cxx\|h\|hpp\)$');
-    eprosima_uncrustify ${FILES}
-}
+        function uncrustify_ ()
+        {
+            for file in "$@";
+            do
+                uncrustify -c ~/dev/cpp-style/uncrustify.cfg -f "${file}" -o "${file}" --no-backup > /dev/null;
+            done
+        }
 
-eprosima_uncrustify_git ()
-{
-    local OUTPUT=$(git diff --name-only --relative ${1});
-    for file in ${OUTPUT};
-    do
-        if [[ "${file}" =~ .*.cpp || "${file}" =~ .*.hpp ]]; then
-            eprosima_uncrustify "${file}";
-        fi;
-    done
-}
+         # Working variables
+        local uncrustify_modified="";
+        local uncrustify_new="";
+        local input_file="";
 
-eprosima_uncrustify_modified ()
-{
-    local BASE_BRANCH=${1};
-    local TARGET_BRANCH=${2};
-    local FILES=$(git diff --name-only ${1} ${2} | grep -e '\.h' -e '\.hpp' -e '\.cpp' | tr '\n' ' ');
-    for file in ${FILES};
-    do
-        eprosima_uncrustify "${file}";
-    done
+        # Validate options
+        if ! options=$(getopt \
+            --options hmnf: \
+            --longoption help,modified,new,file: \
+            -- "$@")
+        then
+            print_usage 1;
+        fi
+
+        eval set -- "${options}"
+
+        while true
+        do
+            case "${1}" in
+                # Flags
+                -h | --help      ) print_usage 0;;
+                -m | --modified  ) uncrustify_modified="--modified"; shift;;
+                -n | --new       ) uncrustify_new="--others"; shift;;
+                -f | --file      ) input_file=$(realpath ${2}); shift 2;;
+                -- ) shift; break ;;
+                # Wrong args
+                * ) echo "Unknown option: '${1}'" >&2; print_usage 1;;
+            esac
+        done
+
+        local OUTPUT=""
+
+        if [ ! -z "${uncrustify_modified}" ] || [ ! -z "${uncrustify_new}" ]
+        then
+            OUTPUT=$(\
+                git ls-files \
+                    ${uncrustify_modified} \
+                    ${uncrustify_new} \
+                    --exclude-standard \
+                | grep -v -E thirdparty \
+                | grep -e '\.h$' -e '\.hpp$' -e '\.ipp$' -e '\.cpp$' -e '\.cxx$' \
+            );
+        fi
+
+        OUTPUT="${OUTPUT} ${input_file}"
+
+        for file in ${OUTPUT};
+        do
+            uncrustify_ "${file}";
+        done
+    )
 }
 
 eprosima_vpn ()
@@ -275,7 +321,7 @@ eprosima_vpn ()
         local interface=$(ifconfig | grep -B1 ${ip_address} | grep -o "^\w*");
         echo "- Interface:   ${interface}";
         echo "- IP address:  ${ip_address}";
-        local routes="192.168.1.2 192.168.1.4 192.168.1.16 192.168.1.17";
+        local routes="192.168.1.2 192.168.1.4 192.168.1.6 192.168.1.16 192.168.1.17";
         for route in ${routes};
         do
             echo "Adding route for ${route} to ${connection_id}";
@@ -302,15 +348,6 @@ eprosima_vpn ()
     fi
 }
 
-modified_files ()
-{
-    local FILES=$(git diff --name-only ${1} | grep -e '\.h' -e '\.hpp' -e '\.cpp' | tr '\n' ' ');
-    for file in ${FILES};
-    do
-        echo "${file}";
-    done
-}
-
 fix_sound()
 {
     systemctl --user unmask pulseaudio
@@ -319,4 +356,16 @@ fix_sound()
     systemctl --user status pulseaudio
 }
 
-. "$HOME/.cargo/env"
+fix_chrome_rendering()
+{
+    echo "Cleaning up GPUCache..."
+    rm -rf "${HOME}/.config/google-chrome/Profile 1/GPUCache/*"
+    rm -rf "${HOME}/.config/google-chrome/Profile 3/GPUCache/*"
+    rm -rf "${HOME}/.config/google-chrome/System Profile/GPUCache/*"
+    rm -rf "${HOME}/.config/google-chrome/Guest Profile/GPUCache/*"
+    echo "Restart chrome from the navigation bar with 'chrome://restart'"
+}
+export PICO_SDK_PATH=/home/eduponz/ephemera/dev/pico/pico-sdk
+export PICO_EXAMPLES_PATH=/home/eduponz/ephemera/dev/pico/pico-examples
+export PICO_EXTRAS_PATH=/home/eduponz/ephemera/dev/pico/pico-extras
+export PICO_PLAYGROUND_PATH=/home/eduponz/ephemera/dev/pico/pico-playground
