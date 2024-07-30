@@ -28,12 +28,12 @@ function eprosima_uncrustify ()
         {
             for file in "$@";
             do
-                uncrustify -c ~/dev/cpp-style/uncrustify.cfg -f "${file}" -o "${file}" --no-backup > /dev/null;
-                uncrustify -c ~/dev/cpp-style/uncrustify.cfg -f "${file}" -o "${file}" --no-backup > /dev/null;
+                uncrustify -c /home/eduponz/eprosima/uncrustify.cfg -f "${file}" -o "${file}" --no-backup > /dev/null;
+                uncrustify -c /home/eduponz/eprosima/uncrustify.cfg -f "${file}" -o "${file}" --no-backup > /dev/null;
             done
         }
 
-         # Working variables
+        # Working variables
         local uncrustify_modified="";
         local uncrustify_new="";
         local input_file="";

@@ -1,9 +1,7 @@
 [user]
     email = eduardoponz@eprosima.com
-    name = EduPonz
-    signingkey = 49D026A07DE7858343F965CBA3271B51629DF2A4
-[core]
-    editor = vim
+    name = eduponz
+    signingkey = 4E6AFDB891A3091D
 [alias]
     lg = "!f() { \
             lines=$1; \
@@ -11,8 +9,10 @@
             git log -n $lines --color --pretty=format:'%Cred%h %Cgreen(%cr) %C(bold blue)%an%Creset - %s %C(yellow)%d%Creset' --abbrev-commit; \
         }; f"
 [credential]
-    helper = cache
+    helper = store
 [http "https://gitlab.intranet.eprosima.com"]
     sslVerify = false
 [commit]
     gpgsign = true
+[core]
+    editor = vim

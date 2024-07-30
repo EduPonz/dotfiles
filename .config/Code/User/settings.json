@@ -185,12 +185,19 @@
     "terminal.integrated.copyOnSelection": true,
     "terminal.integrated.enableMultiLinePasteWarning": false,
     "terminal.integrated.rightClickBehavior": "paste",
-    "terminal.integrated.scrollback": 100000,
+    "terminal.integrated.scrollback": 10000,
     "uncrustify.graphicalConfig": false,
     "workbench.colorTheme": "Visual Studio Dark - C++",
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
     },
     "workbench.startupEditor": "none",
-    "xml.format.splitAttributes": true
+    "xml.format.splitAttributes": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    },
+    "github.copilot.editor.enableAutoCompletions": true
 }

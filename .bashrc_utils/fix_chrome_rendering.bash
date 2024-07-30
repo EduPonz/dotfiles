@@ -1,4 +1,4 @@
-function fix_chrome_rendering()
+function fix_chrome_rendering ()
 {
     echo "Cleaning up GPUCache..."
     rm -rf "${HOME}/.config/google-chrome/Profile 1/GPUCache/*"
