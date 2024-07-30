@@ -59,7 +59,7 @@ then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    # \[\033[01;33m\]$(__git_ps1 "[%s] ") -> Current git branch/commit if present in bold yellow
+    # \[\033[01;33m\]$(__git_ps1 "[%s] ") -> Current git branch/commit if present in bold white
     # \[\033[01;32m\]\u -------------------> username in bold green
     # \[\033[01;34m\]\W -------------------> Current directory (not full path) in bold blue
     # \[\033[01;31m\]\$--------------------> $ in bold red
@@ -123,9 +123,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export PICO_SDK_PATH=/home/eduponz/ephemera/dev/pico/pico-sdk
-export PICO_EXAMPLES_PATH=/home/eduponz/ephemera/dev/pico/pico-examples
-export PICO_EXTRAS_PATH=/home/eduponz/ephemera/dev/pico/pico-extras
-export PICO_PLAYGROUND_PATH=/home/eduponz/ephemera/dev/pico/pico-playground
+export PICO_SDK_PATH=/home/$(whoami)/ephemera/dev/pico/pico-sdk
+export PICO_EXAMPLES_PATH=/home/$(whoami)/ephemera/dev/pico/pico-examples
+export PICO_EXTRAS_PATH=/home/$(whoami)/ephemera/dev/pico/pico-extras
+export PICO_PLAYGROUND_PATH=/home/$(whoami)/ephemera/dev/pico/pico-playground
 
-source /home/eduponz/.bashrc_utils/utils.bash
+source /home/$(whoami)/.bashrc_utils/utils.bash

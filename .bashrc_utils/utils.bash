@@ -23,3 +23,4 @@ source /home/eduponz/.bashrc_utils/eprosima_vpn.bash
 source /home/eduponz/.bashrc_utils/fix_chrome_rendering.bash
 source /home/eduponz/.bashrc_utils/fix_sound.bash
 source /home/eduponz/.bashrc_utils/ccache.bash
+source /home/eduponz/.bashrc_utils/move_git_tag.bash

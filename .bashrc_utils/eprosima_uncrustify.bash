@@ -33,7 +33,7 @@ function eprosima_uncrustify ()
             done
         }
 
-         # Working variables
+        # Working variables
         local uncrustify_modified="";
         local uncrustify_new="";
         local input_file="";
