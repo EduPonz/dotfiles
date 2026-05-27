@@ -1,7 +1,7 @@
 [user]
-    email = eduardoponz@eprosima.com
+    email = eduardo@gizatech.xyz
     name = eduponz
-    signingkey = 4E6AFDB891A3091D
+    signingkey = D4831046D6F2734E
 [alias]
     lg = "!f() { \
             lines=$1; \
@@ -10,9 +10,11 @@
         }; f"
 [credential]
     helper = store
-[http "https://gitlab.intranet.eprosima.com"]
-    sslVerify = false
 [commit]
     gpgsign = true
 [core]
     editor = vim
+    pager = less -FRX
+[init]
+    defaultBranch = main
+
